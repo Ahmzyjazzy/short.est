@@ -1,12 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const { validateUrlRequest } = require('../middlewares/url');
+const {
+    handleUrlEncode,
+    handleUrlDecode,
+    handleUrlStatistics,
+    handleUrlRedirect
+} = require('../controllers/url');
 
-router.post('/encode', (req, res)=> { res.send('encode') });
+router.post('/encode', validateUrlRequest, handleUrlEncode);
 
-router.post('/decode', (req, res) => { res.send('decode') });
+router.post('/decode', handleUrlDecode);
 
-router.get('/statistic/:urlPath', (req, res) => { res.send('statistic') });
+router.get('/statistic/:urlPath', handleUrlStatistics);
 
-router.get('/:urlPath', (req, res) => { res.send('path redirection') });
+router.get('/:urlPath', handleUrlRedirect);
 
 module.exports = router;
