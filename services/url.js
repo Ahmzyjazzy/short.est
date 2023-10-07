@@ -1,6 +1,15 @@
 const shortid = require('shortid')
-const connectRedis = require('../utils/redis.util');
+const connectRedis = require('../utils/redisUtil');
+const errorMessages = require('../constants/error_messages');
 
+/**
+ * Encode a given url to a short url
+ * e.g https://indicina.co -> http://short.est/GeAi9K 
+ * @param {string} originalUrl 
+ * @param {string} protocol 
+ * @param {string} host 
+ * @returns object
+ */
 const encode = async (originalUrl, protocol, host) => {
     const redisClient = await connectRedis()
     let uniqueID = await redisClient.get(originalUrl)
@@ -38,8 +47,23 @@ const encode = async (originalUrl, protocol, host) => {
     return urlObject
 }
 
-const decode = async () => {
-    // TODO: implememt decode service
+/**
+ * Decode a given shortUrl to originalUrl
+ * e.g http://short.est/GeAi9K -> https://indicina.co
+ * @param {string} shortUrl 
+ * @returns Object
+ */
+const decode = async (shortUrl) => {
+    const redisClient = await connectRedis()
+    let uniqueID = await redisClient.get(shortUrl)
+
+    if (!uniqueID) throw new Error(errorMessages.URL_NOT_EXIST)
+
+    const urlObject = await redisClient.get(uniqueID)
+    const { originalUrl } = JSON.parse(urlObject)
+
+    await redisClient.quit()
+    return { originalUrl }
 }
 
 const getUrlObject = async () => {

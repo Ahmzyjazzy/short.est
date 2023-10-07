@@ -10,7 +10,7 @@ const {
 
 router.post('/encode', validateUrlRequest, handleUrlEncode);
 
-router.post('/decode', handleUrlDecode);
+router.post('/decode', validateUrlRequest, handleUrlDecode);
 
 router.get('/statistic/:urlPath', handleUrlStatistics);
 

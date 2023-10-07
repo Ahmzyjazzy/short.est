@@ -15,8 +15,13 @@ const handleUrlEncode = async (req, res) => {
 }
 
 const handleUrlDecode = async (req, res) => {
-    // TODO: implememt handle url decode
-    res.send('decode')
+    try {
+        const { url } = req.body
+        const data = await urlService.decode(url)
+        return res.status(200).json({ success: true, data })
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message })
+    }
 }
 
 const handleUrlRedirect = async (req, res) => {
