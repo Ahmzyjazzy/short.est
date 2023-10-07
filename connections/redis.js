@@ -2,8 +2,12 @@ const redis = require("redis")
 const config = require('../config');
 
 const connectRedis = async () => {
-    // using connection string
-    const RedisClient = redis.createClient(`redis://${config.redis.host}:${config.redis.port}`)
+    const RedisClient = redis.createClient({
+        socket: {
+            host: config.redis.host,
+            port: config.redis.port,
+        }
+    })
 
     // connect to redis
     await RedisClient.connect()

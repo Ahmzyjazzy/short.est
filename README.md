@@ -42,7 +42,7 @@ npm run dev
 * Then visit http://localhost:3000 on your Rest client e.g PostMan to access API
 
 
-## How to run the application in DEVELOPMENT MODE
+## How to run the application and redis with Docker compose
 
 * Build the docker image for the app
 
