@@ -6,6 +6,8 @@ services:
     ports:
       - 6379:6379
     command: redis-server --save 20 1 --loglevel warning
+    networks:
+      - default
     volumes: 
       - cache:/data
   api:
@@ -17,17 +19,22 @@ services:
       - redis
     ports:
       - 3000:3000
+    networks:
+      - default
     environment:
       - BASE_URL=${BASE_URL}
       - NODE_ENV=${NODE_ENV}
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
     links:
       - redis
     volumes:
       - ./:/app
       - /app/node_modules
+    
 volumes:
   cache:
     driver: local
+
+networks:
+  default:

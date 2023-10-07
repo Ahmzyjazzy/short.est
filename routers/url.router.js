@@ -3,13 +3,13 @@ const router = express.Router();
 const {
     validateUrlRequest,
     validatePath
-} = require('../middlewares/url');
+} = require('../middlewares/url.middleware');
 const {
     handleUrlEncode,
     handleUrlDecode,
     handleUrlStatistics,
     handleUrlRedirect
-} = require('../controllers/url');
+} = require('../controllers/url.controller');
 
 router.post('/encode', validateUrlRequest, handleUrlEncode);
 

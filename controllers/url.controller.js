@@ -1,6 +1,6 @@
 const ip = require('ip')
-const ipAddressService = require('../services/ipAddress')
-const urlService = require('../services/url')
+const ipAddressService = require('../services/ipAddress.service')
+const urlService = require('../services/url.service')
 
 const handleUrlEncode = async (req, res) => {
     try {
