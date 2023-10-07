@@ -11,14 +11,20 @@ ShortLink is a URL shortening service where you enter a URL such as https://indi
 
 ## How to run the application in DEVELOPMENT MODE
 
+* Generate .env file using the .env.example
+
+```
+cp .env.example .env
+```
+
 * Start the Docker Desktop application to ensure docker is running on local
 
 * Navigate to the project root
 
-* Startup the redis container with the command below
+* Startup the redis container with the command below in detached mode
 
 ```
-docker compose up -f docker-compose-redis-only.yml
+docker compose -f docker-compose-redis-only.yml up -d
 ```
 
 * Install project dependencies
