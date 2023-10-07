@@ -1,6 +1,6 @@
 const shortid = require('shortid')
-const connectRedis = require('../utils/redisUtil');
-const errorMessages = require('../constants/error_messages');
+const connectRedis = require('../utils/redisUtil')
+const errorMessages = require('../constants/error_messages')
 
 /**
  * Encode a given url to a short url

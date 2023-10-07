@@ -32,22 +32,37 @@ const handleUrlRedirect = async (req, res) => {
         const urlObject = await urlService.getUrlObject(urlPath)
 
         // get visitor ip information
-        const ipAddress = ip.address();
-        const ipAddressInformation = await ipAddressService.getIpAddressInfo(ipAddress);
+        const ipAddress = ip.address()
+        const ipAddressInformation = await ipAddressService.getIpAddressInfo(ipAddress)
 
         // update url stats
         urlObject.statistics.push(ipAddressInformation)
         urlService.updateStats(urlPath, urlObject)
 
-        res.redirect(urlObject.originalUrl);
+        res.redirect(urlObject.originalUrl)
     } catch (error) {
         return res.status(500).json({ success: false, error: error.message })
     }
 }
 
 const handleUrlStatistics = async (req, res) => {
-    // TODO: implememt handle url stats
-    res.send('stats')
+    try {
+        const { urlPath } = req.params
+        const urlObject = await urlService.getUrlObject(urlPath)
+        const { originalUrl, shortUrl } = urlObject
+
+        // update stats
+        const data = {
+            originalUrl,
+            shortUrl,
+            total: urlObject.statistics.length,
+            visitors: urlObject.statistics
+        }
+
+        return res.status(200).json({ success: true, data })
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message })
+    }
 }
 
 module.exports = {

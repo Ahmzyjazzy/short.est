@@ -1,5 +1,7 @@
 # SHORT.EST NODE API
 
+[Link to API Documentation]()
+
 ## Prerequisites
 * The application depends on Redis for in-memory caching
 * Install Docker Desktop if you currently don't have on your PC
@@ -15,6 +17,12 @@
 
 ```
 docker compose up -f docker-compose-redis-only.yml
+```
+
+* Install project dependencies
+
+```
+npm install
 ```
 
 * Finally use the command below to startup the application in dev mode
