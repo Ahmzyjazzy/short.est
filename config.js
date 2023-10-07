@@ -12,6 +12,10 @@ const config = {
         port: env.REDIS_PORT,
         password: env.REDIS_PASSWORD,
     },
+    ipaddress: {
+        base_url: env.ABSTRACT_BASE_URL,
+        api_key: env.ABSTRACT_API_KEY
+    }
 };
 
 module.exports = config

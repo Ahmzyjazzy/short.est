@@ -1,3 +1,5 @@
+const ip = require('ip')
+const ipAddressService = require('../services/ipAddress')
 const urlService = require('../services/url')
 
 const handleUrlEncode = async (req, res) => {
@@ -25,8 +27,22 @@ const handleUrlDecode = async (req, res) => {
 }
 
 const handleUrlRedirect = async (req, res) => {
-    // TODO: implememt handle url redirect
-    res.send('redirect')
+    try {
+        const { urlPath } = req.params
+        const urlObject = await urlService.getUrlObject(urlPath)
+
+        // get visitor ip information
+        const ipAddress = ip.address();
+        const ipAddressInformation = await ipAddressService.getIpAddressInfo(ipAddress);
+
+        // update url stats
+        urlObject.statistics.push(ipAddressInformation)
+        urlService.updateStats(urlPath, urlObject)
+
+        res.redirect(urlObject.originalUrl);
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message })
+    }
 }
 
 const handleUrlStatistics = async (req, res) => {
@@ -37,6 +53,6 @@ const handleUrlStatistics = async (req, res) => {
 module.exports = {
     handleUrlEncode,
     handleUrlDecode,
-    handleUrlStatistics,
     handleUrlRedirect,
+    handleUrlStatistics,
 }

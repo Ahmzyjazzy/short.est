@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { validateUrlRequest } = require('../middlewares/url');
+const {
+    validateUrlRequest,
+    validatePath
+} = require('../middlewares/url');
 const {
     handleUrlEncode,
     handleUrlDecode,
@@ -14,6 +17,6 @@ router.post('/decode', validateUrlRequest, handleUrlDecode);
 
 router.get('/statistic/:urlPath', handleUrlStatistics);
 
-router.get('/:urlPath', handleUrlRedirect);
+router.get('/:urlPath', validatePath, handleUrlRedirect);
 
 module.exports = router;

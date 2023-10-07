@@ -66,12 +66,33 @@ const decode = async (shortUrl) => {
     return { originalUrl }
 }
 
-const getUrlObject = async () => {
-    // TODO: implememt get url object service
+/**
+ * Retrieve url object from cache using the urlPathID
+ * @param {string} urlPathID 
+ * @returns 
+ */
+const getUrlObject = async (urlPathID) => {
+    const redisClient = await connectRedis()
+    let urlObject = await redisClient.get(urlPathID)
+
+    if (!urlObject) throw new Error(appMessages.NO_RESOURCE_FOUND)
+
+    const parsedObject = JSON.parse(urlObject)
+    await redisClient.quit()
+    return parsedObject
 }
 
-const updateStats = async () => {
-    // TODO: implememt update stats
+/**
+ * Update url visits statistics
+ * @param {string} urlPathID 
+ * @param {object} urlObject 
+ * @returns 
+ */
+const updateStats = async (urlPathID, urlObject) => {
+    const redisClient = await connectRedis()
+    await redisClient.set(urlPathID, JSON.stringify(urlObject))
+    await redisClient.quit()
+    return urlObject
 }
 
 module.exports = {
