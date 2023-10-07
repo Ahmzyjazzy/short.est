@@ -1,6 +1,11 @@
 const axios = require('axios')
 const config = require('../config')
 
+/**
+ * Get Ip address info
+ * @param {string} ipAddress 
+ * @returns 
+ */
 const getIpAddressInfo = async (ipAddress) => {
     const url = `${config.ipaddress.base_url}?api_key=${config.ipaddress.api_key}`
     const apiResponse = await axios.get(url + "&ip_address=" + ipAddress)

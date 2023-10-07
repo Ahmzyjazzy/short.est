@@ -1,5 +1,5 @@
 const shortid = require('shortid')
-const connectRedis = require('../utils/redisUtil')
+const connectRedis = require('../connections/redis')
 const errorMessages = require('../constants/error_messages')
 
 /**
