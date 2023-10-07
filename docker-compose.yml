@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - 6379:6379
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
+    volumes: 
+      - cache:/data
+  api:
+    container_name: shortest-api
+    build:
+      context: ./
+    image: shortest-api:latest
+    depends_on:
+      - redis
+    ports:
+      - 3000:3000
+    environment:
+      - BASE_URL=${BASE_URL}
+      - NODE_ENV=${NODE_ENV}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    links:
+      - redis
+    volumes:
+      - ./:/app
+      - /app/node_modules
+volumes:
+  cache:
+    driver: local
