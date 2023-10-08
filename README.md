@@ -9,9 +9,15 @@ ShortLink is a URL shortening service where you enter a URL such as https://indi
 * Install Docker Desktop if you currently don't have on your PC
 * Start the Docker Desktop application
 
-## How to run the application in DEVELOPMENT MODE
+## How to run the application
 
-* Generate .env file using the .env.example
+* Clone the repository
+
+```
+git clone https://github.com/Ahmzyjazzy/short.est.git && cd short.est
+```
+
+* Generate .env from the example file i.e .env.example
 
 ```
 cp .env.example .env
@@ -41,6 +47,21 @@ npm run dev
 
 * Then visit http://localhost:3000 on your Rest client e.g PostMan to access API
 
+## How to run the test
+
+* Navigate to the project root 
+
+* Run the test command 
+
+```
+npm run test
+```
+
+* Run the test coverage 
+
+```
+npm run coverage
+```
 
 ## How to run the application and redis with Docker compose
 
